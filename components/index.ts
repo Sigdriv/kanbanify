@@ -1,4 +1,9 @@
+export { Button } from './Button';
+export { Card } from './Card';
+export { Dialog } from './Dialog';
+export { Footer } from './Footer';
+export { Header1, Text } from './typography';
+export { TextInput } from './TextInput';
 export { Navbar } from './navbar';
 export { title, subtitle } from './primitives';
-export { Header1, Text } from './typography';
-export { Footer } from './Footer';
+export { Select } from './Select';

@@ -1,8 +1,10 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: 'Next.js + HeroUI',
-  description: 'Make beautiful websites regardless of your design experience.',
+  name: 'Kanbanify',
+  title: 'Kanbanify - Your Kanban Board Solution',
+  description:
+    'Kanbanify is a powerful and flexible kanban board solution that helps you manage your projects and tasks efficiently.',
   navItems: [
     {
       label: 'Home',
@@ -61,5 +63,6 @@ export const siteConfig = {
   ],
   links: {
     github: 'https://github.com/Sigdriv/kanbanify',
+    kanban: '/kanban',
   },
 };
