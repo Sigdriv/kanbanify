@@ -5,6 +5,7 @@ export const siteConfig = {
   title: 'Kanbanify - Your Kanban Board Solution',
   description:
     'Kanbanify is a powerful and flexible kanban board solution that helps you manage your projects and tasks efficiently.',
+  author: 'Sigdriv',
   navItems: [
     {
       label: 'Home',

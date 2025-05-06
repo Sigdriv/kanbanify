@@ -6,11 +6,22 @@ interface Props {
   onClick: () => void;
   children: React.ReactNode;
   variant?: 'solid' | 'light' | 'bordered';
+  isLoading?: boolean;
 }
 
-export function Button({ onClick, children, variant = 'bordered' }: Props) {
+export function Button({
+  onClick,
+  children,
+  variant = 'bordered',
+  isLoading,
+}: Props) {
   return (
-    <HeroButton onPress={onClick} variant={variant} className=" m-2">
+    <HeroButton
+      onPress={onClick}
+      variant={variant}
+      className=" m-2"
+      isLoading={isLoading}
+    >
       {children}
     </HeroButton>
   );

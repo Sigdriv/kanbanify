@@ -7,3 +7,4 @@ export { TextInput } from './TextInput';
 export { Navbar } from './navbar';
 export { title, subtitle } from './primitives';
 export { Select } from './Select';
+export * from './icons';

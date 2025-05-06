@@ -1,9 +1,11 @@
 'use client';
 
-import type { DragIssue, Issue, Status } from '@types';
-import { Card, Dialog, Text } from '@components';
-import { Code } from '@heroui/react';
 import { useState } from 'react';
+
+import { Code } from '@heroui/react';
+
+import { Card, Dialog, Text } from '@components';
+import type { DragIssue, Issue, Status } from '@types';
 
 interface Props {
   title: string;
@@ -20,7 +22,7 @@ export function Column({ title, issues, columnId }: Props) {
 
     if (!draggedIssue) return;
 
-    const { columnId: sourceColumnId, issue } = draggedIssue;
+    const { columnId: sourceColumnId } = draggedIssue;
 
     if (sourceColumnId === columnId) return;
 
@@ -40,11 +42,11 @@ export function Column({ title, issues, columnId }: Props) {
   return (
     // TODO: Change colors
     <div
-      className="bg-slate-400 border-slate-700 rounded-lg max-w-lg min-h-screen p-2 gap-3 flex flex-col"
+      className="bg-[#3f3f46] border-slate-700 rounded-lg max-w-lg min-h-screen p-2 gap-3 flex flex-col"
       onDragOver={(e) => e.preventDefault()}
       onDrop={(e) => handleDrop(e, columnId)}
     >
-      <div className="bg-slate-500 border-slate-700 rounded-lg p-2 gap-2 flex flex-row items-center">
+      <div className="p-2 gap-2 flex flex-row items-center">
         <Text>{title}</Text>
         <Code>{issues.length}</Code>
       </div>

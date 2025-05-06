@@ -8,6 +8,9 @@ interface Props {
   value: string;
   onChange: (value: string) => void;
   multiline?: boolean;
+  isRequired?: boolean;
+  errorText?: string;
+  isError?: boolean;
 }
 
 export function TextInput({
@@ -16,6 +19,9 @@ export function TextInput({
   value,
   onChange,
   multiline = false,
+  isRequired = false,
+  errorText,
+  isError,
 }: Props) {
   return multiline ? (
     <Textarea
@@ -24,6 +30,9 @@ export function TextInput({
       value={value}
       onChange={({ target: { value } }) => onChange(value)}
       rows={4}
+      isRequired={isRequired}
+      errorMessage={errorText}
+      isInvalid={isError}
     />
   ) : (
     <Input
@@ -31,6 +40,9 @@ export function TextInput({
       type={type}
       value={value}
       onChange={({ target: { value } }) => onChange(value)}
+      isRequired={isRequired}
+      errorMessage={errorText}
+      isInvalid={isError}
     />
   );
 }

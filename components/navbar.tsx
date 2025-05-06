@@ -1,6 +1,5 @@
 'use client';
 
-import { GithubIcon } from '@/components/icons';
 // import { ThemeSwitch } from '@/components/theme-switch';
 import {
   Navbar as HeroUINavbar,
@@ -9,6 +8,7 @@ import {
 } from '@heroui/navbar';
 import { Link } from '@heroui/react';
 
+import { GithubIcon } from '@components';
 import { siteConfig } from '@config';
 
 import { Text } from './typography';

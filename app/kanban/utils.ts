@@ -11,3 +11,9 @@ export const initialIssue: Issue = {
   description: '',
   variant: 'task',
 };
+
+export const statusOptions = [
+  { label: 'Backlog', value: 'backlog' },
+  { label: 'In progress', value: 'inProgress' },
+  { label: 'Done', value: 'done' },
+];

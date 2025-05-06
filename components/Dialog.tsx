@@ -18,6 +18,7 @@ interface BaseProps {
   body?: string;
   confirmText: string;
   children?: React.ReactNode;
+  isLoading?: boolean;
 }
 
 type WithCancel = BaseProps & {
@@ -42,6 +43,7 @@ export function Dialog({
   children,
   onCancel,
   cancelText,
+  isLoading,
 }: Props) {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -58,7 +60,7 @@ export function Dialog({
         <ModalFooter>
           {onCancel && <Button onClick={onCancel}>{cancelText}</Button>}
 
-          <Button variant="solid" onClick={onConfirm}>
+          <Button variant="solid" onClick={onConfirm} isLoading={isLoading}>
             {confirmText}
           </Button>
         </ModalFooter>

@@ -1,9 +1,9 @@
 'use client';
 
-import { GithubIcon } from '@/components/icons';
 import { Link } from '@heroui/link';
 import { button as buttonStyles } from '@heroui/theme';
 
+import { GithubIcon } from '@components';
 import { Header1, Text } from '@components';
 import { siteConfig } from '@config';
 

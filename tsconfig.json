@@ -20,12 +20,14 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"],
+      "@styles": ["./styles/globals.css"],
       "@api": ["./api/api"],
       "@components": ["./components"],
       "@config": ["./config"],
       "@hooks": ["./api/hooks"],
-      "@types": ["./types"]
+      "@types": ["./types"],
+      "@schema": ["./globalSchema"],
+      "@http": ["./http"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

@@ -9,7 +9,7 @@ import {
 
 import type { Status, Variant } from '@types';
 
-import { Bug, Chore } from './icons';
+import { Bug, Chore, Task } from './icons';
 import { Text } from './typography';
 
 interface Props {
@@ -42,12 +42,14 @@ export function Card({
       </CardBody>
 
       <CardFooter>
-        <div className="flex justify-between w-full">
-          <p>Something</p>
+        <div className="flex justify-between w-full items-center">
+          {/* TODO: Skall det være noe mer her?? */}
+          {/* <p>Something</p> */}
 
-          <div className="flex gap-2">
+          <div className="w-full flex gap-2 items-center justify-end">
             {variant === 'bug' && <Bug size={24} />}
             {variant === 'chore' && <Chore size={24} />}
+            {variant === 'task' && <Task size={30} />}
 
             <p className={status === 'done' ? ' line-through' : ''}>{id}</p>
           </div>
