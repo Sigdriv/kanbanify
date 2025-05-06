@@ -4,8 +4,13 @@ import { useState } from 'react';
 
 import { Code } from '@heroui/react';
 
-import { Card, Dialog, Text } from '@components';
-import type { DragIssue, Issue, Status } from '@types';
+import { Card, Dialog, Select, Text, TextInput } from '@components';
+import { useUpdateIssue } from '@hooks';
+import { checkSchemaError } from '@schema';
+import type { Issue, Status } from '@types';
+
+import { useSchema } from './useSchema';
+import { statusOptions } from './utils';
 
 interface Props {
   title: string;
@@ -15,32 +20,45 @@ interface Props {
 
 export function Column({ title, issues, columnId }: Props) {
   const [issue, setIssue] = useState<Issue>();
-  const [draggedIssue, setDraggedIssue] = useState<DragIssue>(null);
+  const [isSubmitAttempted, setIsSubmitAttempted] = useState(false);
+
+  const { schema } = useSchema();
+  const { mutate: updateIssue, isPending } = useUpdateIssue();
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>, columnId: Status) => {
     e.preventDefault();
 
-    if (!draggedIssue) return;
+    const data = e.dataTransfer.getData('application/json');
 
-    const { columnId: sourceColumnId } = draggedIssue;
+    if (!data) return;
+
+    const dragData = JSON.parse(data);
+
+    const { columnId: sourceColumnId, issue } = dragData;
 
     if (sourceColumnId === columnId) return;
 
-    // TODO: Make API call to update the issue
-    // const updatedIssue = {
-    //   ...issue,
-    //   status: columnId,
-    // };
+    if (issue) {
+      updateIssue({ ...issue, status: columnId });
+    }
+  };
 
-    // mockData = mockData.map((item) =>
-    //   item.id === issue.id ? updatedIssue : item
-    // );
+  const fieldError = {
+    title: checkSchemaError(schema.title, issue?.title),
+    description: checkSchemaError(schema.description, issue?.description),
+  };
 
-    setDraggedIssue(null);
+  const errors = Object.values(fieldError).filter((error) => !!error);
+
+  const handleOnSubmit = () => {
+    if (errors.length === 0 && issue) {
+      updateIssue(issue);
+    }
+
+    setIsSubmitAttempted(true);
   };
 
   return (
-    // TODO: Change colors
     <div
       className="bg-[#3f3f46] border-slate-700 rounded-lg max-w-lg min-h-screen p-2 gap-3 flex flex-col"
       onDragOver={(e) => e.preventDefault()}
@@ -61,7 +79,12 @@ export function Column({ title, issues, columnId }: Props) {
             onClick={() => setIssue(issue)}
             description={issue.description}
             variant={issue.variant}
-            onDrag={() => setDraggedIssue({ columnId, issue })}
+            onDrag={(e) =>
+              e.dataTransfer.setData(
+                'application/json',
+                JSON.stringify({ columnId, issue })
+              )
+            }
           />
         ))}
       </div>
@@ -69,11 +92,48 @@ export function Column({ title, issues, columnId }: Props) {
       <Dialog
         isOpen={!!issue}
         onClose={() => setIssue(undefined)}
-        onConfirm={() => {}}
+        onConfirm={handleOnSubmit}
         header={issue?.title ?? ''}
-        body={issue?.description ?? ''}
         confirmText="Save"
-      />
+        onCancel={() => setIssue(undefined)}
+        cancelText="Cancel"
+        isLoading={isPending}
+      >
+        {!!issue && (
+          <div className="flex flex-col gap-3">
+            <Select
+              label="Status"
+              value={issue.status}
+              onChange={(value) =>
+                setIssue({ ...issue, status: value as Status })
+              }
+              items={statusOptions}
+              isRequired
+            />
+
+            <TextInput
+              label="Title"
+              type="Text"
+              value={issue.title}
+              onChange={(value) => setIssue({ ...issue, title: value })}
+              isRequired
+              isError={!!fieldError.title && isSubmitAttempted}
+              errorText={fieldError.title}
+            />
+
+            <TextInput
+              errorText={fieldError.description}
+              label="Description"
+              type="Text"
+              value={issue.description}
+              onChange={(value) => setIssue({ ...issue, description: value })}
+              multiline
+              isRequired
+              isError={!!fieldError.description && isSubmitAttempted}
+            />
+          </div>
+        )}
+      </Dialog>
     </div>
   );
 }

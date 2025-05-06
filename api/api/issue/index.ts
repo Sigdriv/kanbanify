@@ -1,4 +1,4 @@
-import { post } from '@http';
+import { patch, post } from '@http';
 
 import type { Issue } from '@types';
 
@@ -17,4 +17,9 @@ export function postIssue(issue: Issue): Promise<Issue> {
 
 export function getIssues(): Issue[] {
   return issuesMock;
+}
+
+export function patchIssue(issue: Issue): Promise<{ message: string }> {
+  console.log('patchIssue', issue);
+  return patch<{ message: string }>({ url: urls.patchIssue, body: issue });
 }

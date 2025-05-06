@@ -10,13 +10,10 @@ export type Issue = {
   status: Status;
   description: string;
   variant: Variant;
+  createdAt?: string;
+  updatedAt?: string;
 };
 
 export type Status = 'backlog' | 'inProgress' | 'done';
 
 export type Variant = 'task' | 'bug' | 'chore';
-
-export type DragIssue = {
-  columnId: string;
-  issue: Issue;
-} | null;

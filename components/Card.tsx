@@ -19,7 +19,7 @@ interface Props {
   onClick: () => void;
   description: string;
   variant: Variant;
-  onDrag: () => void;
+  onDrag: (e: React.DragEvent<HTMLDivElement>) => void;
 }
 
 export function Card({

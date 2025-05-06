@@ -5,7 +5,7 @@ export function useSchema() {
 
   const schema = {
     title: createStringSchema('Title', 1, 100),
-    description: createStringSchema('Description', 1, 100),
+    description: createStringSchema('Description', 1, 400),
   };
 
   return {

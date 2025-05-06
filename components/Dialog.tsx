@@ -15,9 +15,8 @@ interface BaseProps {
   onClose: () => void;
   onConfirm: () => void;
   header: string;
-  body?: string;
   confirmText: string;
-  children?: React.ReactNode;
+  children: React.ReactNode;
   isLoading?: boolean;
 }
 
@@ -38,7 +37,6 @@ export function Dialog({
   onClose,
   onConfirm,
   header,
-  body,
   confirmText,
   children,
   onCancel,
@@ -52,10 +50,7 @@ export function Dialog({
           <Text>{header}</Text>
         </ModalHeader>
 
-        <ModalBody>
-          {children && children}
-          {body && <p>{body}</p>}
-        </ModalBody>
+        <ModalBody>{children}</ModalBody>
 
         <ModalFooter>
           {onCancel && <Button onClick={onCancel}>{cancelText}</Button>}

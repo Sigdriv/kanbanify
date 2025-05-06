@@ -8,6 +8,8 @@ export const issuesMock: Issue[] = [
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     variant: 'bug',
+    createdAt: '2023-10-01T12:00:00Z',
+    updatedAt: '2023-10-01T12:00:00Z',
   },
   {
     id: 'UTV-3',
@@ -16,6 +18,8 @@ export const issuesMock: Issue[] = [
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     variant: 'chore',
+    createdAt: '2023-10-01T12:00:00Z',
+    updatedAt: '2023-10-01T12:00:00Z',
   },
   {
     id: 'UTV-5',
@@ -24,6 +28,8 @@ export const issuesMock: Issue[] = [
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     variant: 'task',
+    createdAt: '2023-10-01T12:00:00Z',
+    updatedAt: '2023-10-01T12:00:00Z',
   },
   {
     id: 'UTV-1',
