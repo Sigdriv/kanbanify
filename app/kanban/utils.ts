@@ -17,3 +17,9 @@ export const statusOptions = [
   { label: 'In progress', value: 'inProgress' },
   { label: 'Done', value: 'done' },
 ];
+
+export const variantOptions = [
+  { label: 'Bug', value: 'bug' },
+  { label: 'Task', value: 'task' },
+  { label: 'Chore', value: 'chore' },
+];

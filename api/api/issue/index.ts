@@ -1,25 +1,26 @@
-import { patch, post } from '@http';
-
+import { del, get, patch, post } from '@http';
 import type { Issue } from '@types';
 
 import { urls } from '../urls';
 
-import { issuesMock } from './mockData';
-
-export function postIssue(issue: Issue): Promise<Issue> {
-  return post<Issue>({ url: urls.postIssue, body: issue });
+export function postIssue(issue: Issue): Promise<{ id: number }> {
+  return post({ url: urls.postIssue, body: issue });
 }
 
-// export function getIssues(): Promise<Issue[]> {
-//   // return issuesMock;
-//   return post<Issue[]>({ url: urls.getIssues });
-// }
-
-export function getIssues(): Issue[] {
-  return issuesMock;
+export function getIssues(): Promise<Issue[]> {
+  return get<Issue[]>({ url: urls.getIssues });
 }
 
 export function patchIssue(issue: Issue): Promise<{ message: string }> {
-  console.log('patchIssue', issue);
   return patch<{ message: string }>({ url: urls.patchIssue, body: issue });
+}
+
+export interface DeleteIssueParams {
+  id: string;
+}
+
+export function deleteIssue({
+  id,
+}: DeleteIssueParams): Promise<{ message: string }> {
+  return del({ url: urls.deleteIssue(id) });
 }

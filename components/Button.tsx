@@ -7,6 +7,8 @@ interface Props {
   children: React.ReactNode;
   variant?: 'solid' | 'light' | 'bordered';
   isLoading?: boolean;
+  color?: 'default' | 'danger';
+  isIconOnly?: boolean;
 }
 
 export function Button({
@@ -14,6 +16,8 @@ export function Button({
   children,
   variant = 'bordered',
   isLoading,
+  color = 'default',
+  isIconOnly = false,
 }: Props) {
   return (
     <HeroButton
@@ -21,6 +25,8 @@ export function Button({
       variant={variant}
       className=" m-2"
       isLoading={isLoading}
+      color={color}
+      isIconOnly={isIconOnly}
     >
       {children}
     </HeroButton>

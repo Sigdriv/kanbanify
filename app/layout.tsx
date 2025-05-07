@@ -1,7 +1,6 @@
 'use client';
 
 import '@styles';
-import { TkError } from '@http';
 import clsx from 'clsx';
 
 import { addToast } from '@heroui/react';
@@ -15,6 +14,7 @@ import {
 import { Footer, Navbar } from '@components';
 import { siteConfig } from '@config';
 import { fontSans } from '@config';
+import { TkError } from '@http';
 
 import { Providers } from './providers';
 import { errorTitleMapper } from './utils';

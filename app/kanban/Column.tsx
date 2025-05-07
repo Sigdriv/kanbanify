@@ -2,15 +2,16 @@
 
 import { useState } from 'react';
 
-import { Code } from '@heroui/react';
+import { Code, addToast } from '@heroui/react';
 
 import { Card, Dialog, Select, Text, TextInput } from '@components';
 import { useUpdateIssue } from '@hooks';
 import { checkSchemaError } from '@schema';
-import type { Issue, Status } from '@types';
+import type { Issue, Status, Variant } from '@types';
 
+import { DeleteIssueDialog } from './DeleteIssueDialog';
 import { useSchema } from './useSchema';
-import { statusOptions } from './utils';
+import { statusOptions, variantOptions } from './utils';
 
 interface Props {
   title: string;
@@ -21,9 +22,19 @@ interface Props {
 export function Column({ title, issues, columnId }: Props) {
   const [issue, setIssue] = useState<Issue>();
   const [isSubmitAttempted, setIsSubmitAttempted] = useState(false);
+  const [deleteIssueId, setDeleteIssueId] = useState<string>();
 
   const { schema } = useSchema();
-  const { mutate: updateIssue, isPending } = useUpdateIssue();
+  const { mutate: updateIssue, isPending } = useUpdateIssue({
+    onSuccess: () => {
+      setIssue(undefined);
+      addToast({
+        title: 'Success',
+        description: 'Issue updated successfully',
+        color: 'success',
+      });
+    },
+  });
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>, columnId: Status) => {
     e.preventDefault();
@@ -89,6 +100,15 @@ export function Column({ title, issues, columnId }: Props) {
         ))}
       </div>
 
+      <DeleteIssueDialog
+        id={deleteIssueId || ''}
+        setId={(value) => setDeleteIssueId(value)}
+        onSuccess={() => {
+          setDeleteIssueId(undefined);
+          setIssue(undefined);
+        }}
+      />
+
       <Dialog
         isOpen={!!issue}
         onClose={() => setIssue(undefined)}
@@ -98,18 +118,31 @@ export function Column({ title, issues, columnId }: Props) {
         onCancel={() => setIssue(undefined)}
         cancelText="Cancel"
         isLoading={isPending}
+        onDelete={() => setDeleteIssueId(issue?.id)}
       >
         {!!issue && (
           <div className="flex flex-col gap-3">
-            <Select
-              label="Status"
-              value={issue.status}
-              onChange={(value) =>
-                setIssue({ ...issue, status: value as Status })
-              }
-              items={statusOptions}
-              isRequired
-            />
+            <div className="flex flex-row gap-3">
+              <Select
+                label="Status"
+                value={issue.status}
+                onChange={(value) =>
+                  setIssue({ ...issue, status: value as Status })
+                }
+                items={statusOptions}
+                isRequired
+              />
+
+              <Select
+                label="Variant"
+                value={issue.variant}
+                onChange={(value) =>
+                  setIssue({ ...issue, variant: value as Variant })
+                }
+                items={variantOptions}
+                isRequired
+              />
+            </div>
 
             <TextInput
               label="Title"

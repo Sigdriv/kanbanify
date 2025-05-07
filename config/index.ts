@@ -1,2 +1,2 @@
-export { siteConfig } from "./site";
-export { fontSans, fontMono } from "./fonts";
+export { siteConfig } from './site';
+export { fontSans, fontMono } from './fonts';

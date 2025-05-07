@@ -1,8 +1,7 @@
-import type { TkError } from '@http';
-
 import { useQuery } from '@tanstack/react-query';
 
 import { getIssues } from '@api';
+import type { TkError } from '@http';
 import type { Issue } from '@types';
 
 import { queryKeys } from '../queryKeys';
