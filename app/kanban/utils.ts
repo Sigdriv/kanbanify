@@ -1,7 +1,11 @@
 import type { Issue, Status } from '@types';
 
 export function getIssuesByStatus(issues: Issue[], status: Status) {
-  return issues.filter((issue) => issue.status === status);
+  const fitleredIssues = issues.filter((issue) => issue.status === status);
+
+  return fitleredIssues.toSorted((a, b) => {
+    return a.id.localeCompare(b.id);
+  });
 }
 
 export const initialIssue: Issue = {

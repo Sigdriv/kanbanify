@@ -42,17 +42,12 @@ export function Card({
       </CardBody>
 
       <CardFooter>
-        <div className="flex justify-between w-full items-center">
-          {/* TODO: Skall det være noe mer her?? */}
-          {/* <p>Something</p> */}
+        <div className="w-full flex gap-2 items-center justify-end">
+          {variant === 'bug' && <Bug size={24} />}
+          {variant === 'chore' && <Chore size={24} />}
+          {variant === 'task' && <Task size={30} />}
 
-          <div className="w-full flex gap-2 items-center justify-end">
-            {variant === 'bug' && <Bug size={24} />}
-            {variant === 'chore' && <Chore size={24} />}
-            {variant === 'task' && <Task size={30} />}
-
-            <p className={status === 'done' ? ' line-through' : ''}>{id}</p>
-          </div>
+          <p className={status === 'done' ? ' line-through' : ''}>{id}</p>
         </div>
       </CardFooter>
     </HeroCard>

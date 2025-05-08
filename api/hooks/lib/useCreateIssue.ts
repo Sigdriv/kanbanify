@@ -7,7 +7,7 @@ import type { Issue } from '@types';
 import { queryKeys } from '../queryKeys';
 
 interface Params {
-  onSuccess: () => void;
+  onSuccess: (issue: Issue) => void;
 }
 
 export function useCreateIssue({ onSuccess }: Params) {
@@ -15,9 +15,9 @@ export function useCreateIssue({ onSuccess }: Params) {
 
   const queryKey = queryKeys.getIssues;
 
-  return useMutation<{ id: number }, TkError, Issue>({
+  return useMutation<Issue, TkError, Issue>({
     mutationFn: postIssue,
-    onSuccess: ({ id }, issue) => {
+    onSuccess: (issue) => {
       const existingIssues = queryClient.getQueryData<Issue[]>(queryKey);
 
       queryClient.setQueryData<Issue[]>(queryKey, () => {
@@ -25,12 +25,11 @@ export function useCreateIssue({ onSuccess }: Params) {
           ...(existingIssues || []),
           {
             ...issue,
-            id: `KAN-${id}`,
           },
         ];
       });
 
-      onSuccess();
+      onSuccess(issue);
     },
   });
 }

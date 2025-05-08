@@ -80,6 +80,12 @@ export function Column({ title, issues, columnId }: Props) {
         <Code>{issues.length}</Code>
       </div>
 
+      {issues.length === 0 && (
+        <div className="items-center w-full flex justify-center">
+          <Text>No issues found</Text>
+        </div>
+      )}
+
       <div className="grid gap-4">
         {issues.map((issue) => (
           <Card

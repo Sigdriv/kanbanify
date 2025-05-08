@@ -2,100 +2,71 @@ import { useState } from 'react';
 
 import { addToast } from '@heroui/react';
 
-import { Button, Dialog, Select, TextInput } from '@components';
-import { useCreateIssue } from '@hooks';
-import { checkSchemaError } from '@schema';
-import type { Issue, Status } from '@types';
+import { Button, Dialog, Select } from '@components';
+import { useUpdateIssue } from '@hooks';
+import type { Issue, Variant } from '@types';
 
-import { useSchema } from './useSchema';
-import { initialIssue, statusOptions } from './utils';
+import { NewIssueDialog } from './NewIssueDialog';
+import { initialIssue, variantOptions } from './utils';
 
 export function NewIssue() {
-  const [newIssue, setNewIssue] = useState<Issue>(initialIssue);
   const [isOpen, setIsOpen] = useState(false);
-  const [isSubmitAttempted, setIsSubmitAttempted] = useState(false);
+  const [isChangeVariantOpen, setIsChangeVariantOpen] = useState(false);
+  const [createdIssue, setCreatedIssue] = useState<Issue>(initialIssue);
 
-  const { schema } = useSchema();
-  const { mutate: createIssue, isPending } = useCreateIssue({
+  const { mutate: updateIssue, isPending } = useUpdateIssue({
     onSuccess: () => {
-      setIsOpen(false);
-      setNewIssue(initialIssue);
-      setIsSubmitAttempted(false);
+      setIsChangeVariantOpen(false);
+      setCreatedIssue(initialIssue);
       addToast({
         title: 'Success',
-        description: 'Issue created successfully',
+        description: 'Issue updated successfully',
         color: 'success',
       });
     },
   });
-
-  const fieldError = {
-    title: checkSchemaError(schema.title, newIssue.title),
-    description: checkSchemaError(schema.description, newIssue.description),
-  };
-
-  const errors = Object.values(fieldError).filter((error) => !!error);
-
-  const handleCreateIssue = () => {
-    if (errors.length === 0) {
-      createIssue(newIssue);
-    }
-
-    setIsSubmitAttempted(true);
-  };
 
   return (
     <div className="flex justify-end ">
       <Button
         onClick={() => {
           setIsOpen(true);
-          setNewIssue(initialIssue);
-          setIsSubmitAttempted(false);
         }}
         variant="solid"
       >
         New issue
       </Button>
 
-      <Dialog
+      <NewIssueDialog
         isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-        onConfirm={handleCreateIssue}
-        onCancel={() => setIsOpen(false)}
+        setIsOpen={setIsOpen}
+        setIsChangeVariantOpen={setIsChangeVariantOpen}
+        setCreatedIssue={setCreatedIssue}
+      />
+
+      <Dialog
+        isOpen={isChangeVariantOpen}
+        onClose={() => setIsChangeVariantOpen(false)}
+        onConfirm={() =>
+          updateIssue({
+            ...createdIssue,
+            variant: createdIssue.variant || 'bug',
+          })
+        }
+        onCancel={() => setIsChangeVariantOpen(false)}
         cancelText="Cancel"
-        header="Create new issue"
-        confirmText="Create"
+        header="Change issue variant"
+        confirmText="Update"
         isLoading={isPending}
       >
         <Select
-          label="Status"
-          value={newIssue.status}
+          label="Variant"
+          value={createdIssue.variant || ''}
           onChange={(value) =>
-            setNewIssue({ ...newIssue, status: value as Status })
+            setCreatedIssue({ ...createdIssue, variant: value as Variant })
           }
-          items={statusOptions}
+          items={variantOptions}
           isRequired
-        />
-
-        <TextInput
-          label="Title"
-          type="Text"
-          value={newIssue.title}
-          onChange={(value) => setNewIssue({ ...newIssue, title: value })}
-          isRequired
-          isError={!!fieldError.title && isSubmitAttempted}
-          errorText={fieldError.title}
-        />
-
-        <TextInput
-          errorText={fieldError.description}
-          label="Description"
-          type="Text"
-          value={newIssue.description}
-          onChange={(value) => setNewIssue({ ...newIssue, description: value })}
-          multiline
-          isRequired
-          isError={!!fieldError.description && isSubmitAttempted}
         />
       </Dialog>
     </div>

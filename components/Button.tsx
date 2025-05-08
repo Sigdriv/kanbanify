@@ -23,7 +23,7 @@ export function Button({
     <HeroButton
       onPress={onClick}
       variant={variant}
-      className=" m-2"
+      className="m-2"
       isLoading={isLoading}
       color={color}
       isIconOnly={isIconOnly}

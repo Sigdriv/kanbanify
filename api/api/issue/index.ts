@@ -3,7 +3,7 @@ import type { Issue } from '@types';
 
 import { urls } from '../urls';
 
-export function postIssue(issue: Issue): Promise<{ id: number }> {
+export function postIssue(issue: Issue): Promise<Issue> {
   return post({ url: urls.postIssue, body: issue });
 }
 
